@@ -14,14 +14,14 @@ int jumpSearch(vector<int>&a,int k,int t){
         ans++;
 
         int prev=step-k;
-        for(int i=step-1;i>=prev;i--){
-            ans++;
+        for(int i=step;i>=prev;i--){
+            if(i!=step)ans++;
             if(a[i]==t) return ans;
         }
     }else{
         int start=step;
-        for(int i=start+1;i<n;i++){
-            ans++;
+        for(int i=start;i<n;i++){
+            if(i!=start)ans++;
             if(a[i]==t) return ans;
         }
     }
