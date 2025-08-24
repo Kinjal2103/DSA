@@ -1,3 +1,4 @@
+//https://www.youtube.com/watch?v=JRAByolWqhw&list=PLfqMhTWNBTe137I_EPQd34TsgV6IO55pt&index=21
 #include<bits/stdc++.h>
 using namespace std;
 int isValid(vector<int>a,int mid,int n,int m){
