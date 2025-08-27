@@ -1,0 +1,106 @@
+#include<bits/stdc++.h>
+using namespace std;
+using matrix = vector<vector<int>>;
+matrix add(const matrix &A, const matrix &B) {
+    int n = A.size();
+    matrix C(n, vector<int>(n));
+    for(int i=0; i<n; i++)
+        for(int j=0; j<n; j++)
+            C[i][j] = A[i][j] + B[i][j];
+    return C;
+}
+matrix subtract(const matrix &A, const matrix &B) {
+    int n = A.size();
+    matrix C(n, vector<int>(n));
+    for(int i=0; i<n; i++)
+        for(int j=0; j<n; j++)
+            C[i][j] = A[i][j] - B[i][j];
+    return C;
+}
+matrix multiply(const matrix &A, const matrix &B) {
+    int n = A.size();
+    matrix C(n, vector<int>(n, 0));
+    for(int i=0; i<n; i++)
+        for(int j=0; j<n; j++)
+            for(int k=0; k<n; k++)
+                C[i][j] += A[i][k] * B[k][j];
+    return C;
+}
+matrix strassen(const matrix &A, const matrix &B) {
+    int n = A.size();
+
+    if (n == 1) {
+        return matrix{{A[0][0] * B[0][0]}};
+    }
+    if (n <= 2) {
+        return multiply(A, B);
+    }
+
+    int newSize = n/2;
+
+    
+    matrix A11(newSize, vector<int>(newSize)), A12(newSize, vector<int>(newSize)),
+           A21(newSize, vector<int>(newSize)), A22(newSize, vector<int>(newSize));
+    matrix B11(newSize, vector<int>(newSize)), B12(newSize, vector<int>(newSize)),
+           B21(newSize, vector<int>(newSize)), B22(newSize, vector<int>(newSize));
+
+    for (int i = 0; i < newSize; i++) {
+        for (int j = 0; j < newSize; j++) {
+            A11[i][j] = A[i][j];
+            A12[i][j] = A[i][j + newSize];
+            A21[i][j] = A[i + newSize][j];
+            A22[i][j] = A[i + newSize][j + newSize];
+
+            B11[i][j] = B[i][j];
+            B12[i][j] = B[i][j + newSize];
+            B21[i][j] = B[i + newSize][j];
+            B22[i][j] = B[i + newSize][j + newSize];
+        }
+    }
+
+        matrix M1 = strassen(add(A11, A22), add(B11, B22));
+        matrix M2 = strassen(add(A21, A22), B11);
+        matrix M3 = strassen(A11, subtract(B12, B22));
+        matrix M4 = strassen(A22, subtract(B21, B11));
+        matrix M5 = strassen(add(A11, A12), B22);
+        matrix M6 = strassen(subtract(A21, A11), add(B11, B12));
+        matrix M7 = strassen(subtract(A12, A22), add(B21, B22));
+
+        matrix C11 = add(subtract(add(M1, M4), M5), M7);
+        matrix C12 = add(M3, M5);
+        matrix C21 = add(M2, M4);
+        matrix C22 = add(subtract(add(M1, M3), M2), M6);
+
+    matrix C(n, vector<int>(n));
+
+    for (int i = 0; i < newSize; i++) {
+        for (int j = 0; j < newSize; j++) {
+            C[i][j] = C11[i][j];
+            C[i][j + newSize] = C12[i][j];
+            C[i + newSize][j] = C21[i][j];
+            C[i + newSize][j + newSize] = C22[i][j];
+        }
+    }
+
+    return C;
+}
+int main(){
+    int n;
+    cin>>n;
+    matrix A(n, vector<int>(n)), B(n, vector<int>(n));
+    for(int i=0; i<n; i++) 
+        for(int j=0; j<n; j++) 
+            cin >> A[i][j];
+
+    for(int i=0; i<n; i++) 
+        for(int j=0; j<n; j++) 
+            cin >> B[i][j];
+    matrix C = strassen(A, B);
+
+    for(int i=0; i<n; i++) 
+        for(int j=0; j<n; j++) 
+            cout << C[i][j] << " ";
+    cout << endl;
+
+    return 0;
+}
