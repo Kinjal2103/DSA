@@ -21,16 +21,16 @@ int getBalance(Node *root){
     return height(root->left)-height(root->right);
 }
 
-Node *leftRotate(Node *x){
+Node *rightRotate(Node *x){
     Node* y=x->left;
     Node *T=y->right;
-    
+
     y->right=x;
     x->left=T;
 
     return y;
 }
-Node *rightRotate(Node *x){
+Node *leftRotate(Node *x){
     Node* y=x->right;
     Node *T=y->left;
 
@@ -50,6 +50,7 @@ void levelOrder(Node *root){
         if(curr->left) q.push(curr->left);
         if(curr->right) q.push(curr->right);
     }
+    cout<<endl;
 }
 Node *insert(Node *root, int d){
     if(root==NULL) return new Node(d);
@@ -60,18 +61,18 @@ Node *insert(Node *root, int d){
     int balance=getBalance(root);
 
     if(balance>1 && d<root->left->data) {
-        return leftRotate(root);
+        return rightRotate(root);
     }
     if(balance<-1 && d>root->right->data){
-        return rightRotate(root);
-    }
-    if(balance >1 && d>root->left->data){
-        root->left=rightRotate(root->left);
         return leftRotate(root);
     }
-    if(balance <-1 && d<root->left->data){
-        root->right = leftRotate(root->right);
+    if(balance >1 && d>root->left->data){
+        root->left=leftRotate(root->left);
         return rightRotate(root);
+    }
+    if(balance <-1 && d<root->left->data){
+        root->right = rightRotate(root->right);
+        return leftRotate(root);
     }
     return root;
 }
