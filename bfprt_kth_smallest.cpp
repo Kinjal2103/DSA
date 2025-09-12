@@ -14,7 +14,7 @@ int bfprt(vector<int>&a,int k){
             i++;
         }
         sort(value.begin(),value.end());
-        medians.push_back(value[ceil(a.size()/2)]);
+        medians.push_back(value[(value.size()/2)]);
     }
     int pivot = bfprt(medians, (medians.size() + 1) / 2);
     vector<int>left,right;
