@@ -2,6 +2,7 @@
 //Brute force - find frequency 
 //Optimal -Sorting (then find frequency)
 // mY SOLUTION
+
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
