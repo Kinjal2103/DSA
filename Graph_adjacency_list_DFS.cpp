@@ -21,10 +21,11 @@ public :
         while(!q.empty()){
             int node =q.top();
             q.pop();
+            visited[node]=1;
             cout<<node<<" ";
             for(int a: adj[node]){
                 if(!visited[a]){
-                    visited[a]=1;
+                    //visited[a]=1;
                     q.push(a);
                 }
             }
