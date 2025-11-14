@@ -4,3 +4,4 @@
 # Allow Revision files explicitly (no need if they are .cpp, this is just extra safety)
 Revision*.cpp
 test*.cpp
+Practice*.cpp
