@@ -13,7 +13,7 @@ void rabinKarp(string t,string p){
     for(int i=0;i<m;i++){
         P=(d*P+ p[i])%q;
         t0=(d*t0 + t[i])%q;
-    }
+    } 
     for(int i=0;i<n-m+1;i++){
         if(P==t0){
             bool match=true;
