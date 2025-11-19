@@ -40,13 +40,18 @@ void prims(int V,vector<vector<int>> &edges){
         totalWeight += key[i];
     }
     cout << totalWeight << endl;
+
+    cout<<"The paths are"<<endl;
+    for(int i=1;i<V;i++){
+        cout<<parent[i]<<" -> "<<i<<" = "<<key[i]<<endl;
+    }
 }
 
 int main(){
     int V=5;
     vector<vector<int>> edges={
         {4, 0, 1},
-        {4, 0, 2},
+        {4, 0, 2},  
         {2, 1, 2},
         {5, 1, 3},
         {5, 2, 3},
