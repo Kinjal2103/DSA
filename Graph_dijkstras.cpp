@@ -9,6 +9,7 @@ void dijkstra(int V, vector<vector<int>> &edges, int src){
         adj[u].push_back({v, w});
     }
     vector<int> dist(V, INT_MAX);
+    vector<int> parent(V, -1);
     dist[src] = 0;
     priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
     pq.push({0, src});
@@ -23,11 +24,28 @@ void dijkstra(int V, vector<vector<int>> &edges, int src){
             if(dist[u] + w < dist[v]){
                 dist[v] = dist[u] + w;
                 pq.push({dist[v], v});
+                parent[v]=u;
             }
         }
     }
     for(int i = 0; i < V; i++){
         cout << "Distance to " << i << " = " << dist[i] << "\n";
+    }
+    for(int i=0;i<V;i++){
+        if(dist[i]==INT_MAX){
+            cout<<"NO PATH"<<endl; 
+            continue;
+        }
+        vector<int>path;
+        int node=i;
+        while(node!=-1){
+            path.push_back(node);
+            node=parent[node];
+        }
+        for(int i=path.size()-1;i>=0;i--){
+            cout<<path[i]<<" ";
+        }
+        cout<<endl;
     }
 }
 int main(){
